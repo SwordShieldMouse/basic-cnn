@@ -4,6 +4,7 @@ import torch.nn.functional as F
 import torchvision
 import torchvision.transforms as transforms
 from torch.utils.data import DataLoader
+import time
 
 device = torch.device('cuda' if torch.cuda.is_available() else "cpu")
 
@@ -52,9 +53,11 @@ epochs = 10
 
 # train
 print("training")
+start = time.time()
 for epoch in range(epochs):
     print("epoch {}".format(epoch))
     running_loss = 0.0
+    epoch_start = time.time()
     for i, data in enumerate(trainloader, 0):
         inputs, labels = data
 
@@ -73,8 +76,11 @@ for epoch in range(epochs):
         if i % 2000 == 1999:    # print every 2000 mini-batches
             print('[epoch {}, mini-batch {}] loss: {}'.format(epoch + 1, i + 1, running_loss / 2000))
             running_loss = 0.0
-
+    epoch_end = time.time()
+    print("epoch {} took {} seconds".format(epoch, epoch_end - epoch_start))
+end = time.time()
 print("finished training")
+print("training took {} seconds".format(end - start))
 
 # test
 correct = 0
