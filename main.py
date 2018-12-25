@@ -35,12 +35,12 @@ transform = transforms.Compose(
 
 train_set = torchvision.datasets.CIFAR10(root = "./data", train = True, download = True, transform = transform)
 
-trainloader = DataLoader(train_set, batch_size = 5, shuffle = True, num_workers = 2)
+trainloader = DataLoader(train_set, batch_size = 5, shuffle = True)#, num_workers = 2)
 
 testset = torchvision.datasets.CIFAR10(root='./data', train=False,
                                        download=True, transform=transform)
 testloader = torch.utils.data.DataLoader(testset, batch_size=4,
-                                         shuffle=False, num_workers=2)
+                                         shuffle=False)#, num_workers=2)
 
 classes = ('plane', 'car', 'bird', 'cat',
            'deer', 'dog', 'frog', 'horse', 'ship', 'truck')
@@ -67,7 +67,7 @@ for epoch in range(epochs):
         loss = criterion(outputs, labels)
 
         loss.backward()
-        optimizer.step()
+        optim.step()
 
         running_loss += loss.item()
         if i % 2000 == 1999:    # print every 2000 mini-batches
